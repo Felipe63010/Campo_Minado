@@ -40,25 +40,28 @@ while numero_de_minas>0:
 print()
 
 def marcar_bomba(mapa):
+    '''Marca uma posição como possível mina (M)'''
     try:
         marcar_linha = int(input("Digite a linha que você acredita que há mina está: "))
         marcar_coluna = int(input("Digite a coluna que você acredita que há mina está: "))
 
         marcar_linha = marcar_linha - 1
         marcar_coluna = marcar_coluna - 1
-
+        
+    '''Verifica se está dentro dos limites'''
         if marcar_linha >= linhas or marcar_coluna >= colunas or marcar_linha < 0 or marcar_coluna < 0:
             print("Posição escolhida inválida!")
         else:
             mapa[marcar_linha][marcar_coluna] = "M"
 
-
+    '''Mostra o mapa atualizado'''
         for linha in mapa:
             print(*linha, sep=" ")
     except(ValueError):
         print("Digite valores válidos!")
 
 def abrir_posicao(mapa):
+    '''Abre uma posição e mostra número de minas próximas'''
 
     try:
         marcacao_lin = int(input("Digite a linha da posição que deseja abrir: "))
@@ -67,10 +70,11 @@ def abrir_posicao(mapa):
         marcacao_lin = marcacao_lin - 1
         marcacao_col = marcacao_col - 1
 
-
+        '''Verifica se está dentro dos limites'''
         if marcacao_lin >= linhas or marcacao_col >= colunas or marcacao_lin < 0 or marcacao_col < 0:
             print("Posição escolhida inválida")
         else:
+            '''Se for mina, perde'''
             if mapa_invisivel[marcacao_lin][marcacao_col] == "m":
                 print("Boooom")
                 print("Vocẽ perdeu!")
@@ -79,6 +83,7 @@ def abrir_posicao(mapa):
                 posicoes_verificadas = set()
                 bomba = 0
 
+                '''Verifica as 8 posições ao redor'''
                 if marcacao_lin + 1 < len(mapa_invisivel):
                     if mapa_invisivel[marcacao_lin + 1][marcacao_col] == "m" and (marcacao_lin + 1, marcacao_col) not in posicoes_verificadas:
                         bomba = bomba + 1
@@ -118,7 +123,8 @@ def abrir_posicao(mapa):
                     if mapa_invisivel[marcacao_lin + 1][marcacao_col - 1] == "m" and (marcacao_lin + 1, marcacao_col - 1) not in posicoes_verificadas:        
                         bomba = bomba + 1
                         posicoes_verificadas.add((marcacao_lin + 1, marcacao_col - 1))
-
+                        
+                '''Mostra número de minas ao redor'''
                 mapa[marcacao_lin][marcacao_col] = (bomba)
                 for linha in mapa:
                     print(*linha, sep=" ")
@@ -128,6 +134,7 @@ def abrir_posicao(mapa):
 
 
 def verificador_vitoria(mapa, mapa_invisivel):
+    '''Verifica se todas as minas foram marcadas corretamente'''
     for linha in range(len(mapa_invisivel)):
         for coluna in range(len(mapa_invisivel[0])):
             if mapa_invisivel[linha][coluna] == "m":
