@@ -17,7 +17,7 @@ while True:
                     mapa.append(linha)
     
                 for linha in mapa:
-                    print(*linha, sep=" ") #asterisco desempacota lista e sep o que vai saparar
+                    print(*linha, sep=" ")
                 break 
             else:
                 print("Inválido, o número de minas não pode ser 0 e nem superior ao tamanho do mapa! ")
